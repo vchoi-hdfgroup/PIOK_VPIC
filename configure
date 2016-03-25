@@ -582,7 +582,7 @@ PACKAGE_STRING='piok version-0.1'
 PACKAGE_BUGREPORT=''
 PACKAGE_URL=''
 
-ac_default_prefix=`pwd`/bin
+ac_default_prefix=`pwd`
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>

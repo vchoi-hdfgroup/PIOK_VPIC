@@ -78,7 +78,7 @@ MACHINE=`uname -s`
 
 dnl binary directory
 TOP=`pwd`
-AC_PREFIX_DEFAULT(`pwd`/bin)
+AC_PREFIX_DEFAULT(`pwd`)
 dnl prefix=$ac_default_prefix
 if test "x$prefix" = "xNONE"; then
   prefix=$ac_default_prefix
