@@ -42,6 +42,8 @@ SRC	= $(TOP)/benchmarks
 BUILD_READ	= @BUILD_READ@
 BUILD_WRITE	= @BUILD_WRITE@
 BUILDSUBDIRS = read write
+READSUBDIRS = read
+WRITESUBDIRS = write
 ifeq ($(BUILD_READ),1)
 	BUILDFLAG   = "BUILD_READ=1"
 	BUILDSUBDIRS	= read
@@ -63,17 +65,17 @@ all::	$(BUILDSUBDIRS)
 	done
 
 ###################################################################
-# For ALL build for C++
+# For build 
 ###################################################################
-read::	read
-	for i in $(BUILDSUBDIRS) ; \
+readbenchmark::	$(READSUBDIRS)
+	for i in $(READSUBDIRS) ; \
 	do \
 	(cd $$i ; echo "making" read benchmarks all "in $(TOP)..." ; \
 	$(MAKE) all ) ; \
 	done
 
-write::	write
-	for i in $(BUILDSUBDIRS) ; \
+writebenchmark::	$(WRITESUBDIRS)
+	for i in $(WRITESUBDIRS) ; \
 	do \
 	(cd $$i ; echo "making" write benchmarks all "in $(TOP)..." ; \
 	$(MAKE) all ) ; \

@@ -33,9 +33,9 @@ BIN_DIR	= @BIN_DIR@
 HDF5_DIR	= @HDF5_PATH@
 H5PART_DIR	= @H5PART_PATH@
 MPI_DIR	= @MPI_PATH@
-INCLUDES = -I. -I$(HDF5_PATH)/include -I$(H5PART_PATH)/include
+INCLUDES = -I. -I$(HDF5_DIR)/include -I$(H5PART_DIR)/include
 C_FLAGS	= -DPARALLEL_IO -DH5_HAVE_PARALLEL
-LIB_FLAGS   = -L$(HDF5_PATH)/lib -L${H5PART_DIR}/lib -lhdf5 -lH5Part -lz -lm
+LIB_FLAGS   = -L$(HDF5_DIR)/lib -L${H5PART_DIR}/lib -lhdf5 -lH5Part -lz -lm
 
 DEBUG   =   @DEBUG@
 SHARED_FLAG = @SHARED_FLAG@

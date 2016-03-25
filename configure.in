@@ -95,6 +95,10 @@ my_H5PCC_GET_COMPILER
 my_GCC_GET_COMPILER
 my_GXX_GET_COMPILER
 
+if test "$H5PCC_COMPILER" = "" ; then
+	H5PCC_COMPILER=$HDF5_PATH/bin/h5pcc
+fi
+
 if test "$ac_read" = "yes" ; then
  	echo "*** only build read benchmark ***"
 	BUILD_READ="1"
@@ -106,6 +110,7 @@ fi
 
 dnl ##########################################################
 DEBUG="-g"
+SHARED_FLAG=
 
 dnl ##########################################################
 BIN_DIR=$prefix/bin
@@ -139,6 +144,7 @@ AC_SUBST(BUILD_READ)
 AC_SUBST(BUILD_WRITE)
 
 AC_SUBST(DEBUG)
+AC_SUBST(SHARED_FLAG)
 AC_SUBST(BIN_DIR)
 
 dnl Checks for programs.

@@ -636,6 +636,7 @@ LDFLAGS
 CXXFLAGS
 CXX
 BIN_DIR
+SHARED_FLAG
 DEBUG
 BUILD_WRITE
 BUILD_READ
@@ -2344,6 +2345,10 @@ $as_echo "valid g++ compiler not found" >&6; }
 fi
 
 
+if test "$H5PCC_COMPILER" = "" ; then
+	H5PCC_COMPILER=$HDF5_PATH/bin/h5pcc
+fi
+
 if test "$ac_read" = "yes" ; then
  	echo "*** only build read benchmark ***"
 	BUILD_READ="1"
@@ -2354,6 +2359,7 @@ if test "$ac_write" = "yes" ; then
 fi
 
 DEBUG="-g"
+SHARED_FLAG=
 
 BIN_DIR=$prefix/bin
 echo prefix = $prefix
@@ -2363,6 +2369,7 @@ fi
 if test ! -d $BIN_DIR ; then
     mkdir $BIN_DIR
 fi
+
 
 
 

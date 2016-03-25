@@ -53,7 +53,7 @@ all::	$(BUILDSUBDIRS)
 	for i in $(BUILDSUBDIRS) ; \
 	do \
 	(cd $$i ; echo "making" all "in $(TOP)..." ; \
-	$(MAKE) all ) ) ; \
+	$(MAKE) all ) ; \
 	done
 
 ###################################################################
