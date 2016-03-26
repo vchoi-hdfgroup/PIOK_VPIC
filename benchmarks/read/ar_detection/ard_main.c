@@ -19,6 +19,7 @@ This is an implementation to detect Atmospheric Rivers in a given vapor data. Cu
 
 #include "params.h"
 #include "read_h5.h"
+#include <hdf5.h>
 
 #define PROFILE
 
