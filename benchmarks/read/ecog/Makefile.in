@@ -33,8 +33,15 @@ BIN_DIR	= @BIN_DIR@
 HDF5_DIR	= @HDF5_PATH@
 H5PART_DIR	= @H5PART_PATH@
 MPI_DIR	= @MPI_PATH@
-INCLUDES = -I. -I$(HDF5_DIR)/include
-LIB_FLAGS   = -L$(HDF5_DIR)/lib -lhdf5
+ifeq (X$(MPI_DIR), X)
+	MPI_INCLUDE =
+	MPI_LIB =
+else
+	MPI_INCLUDE = -I$(MPI_DIR)/include
+	MPI_LIB = -L$(MPI_DIR)/lib -lmpi
+endif
+INCLUDES = -I. -I$(HDF5_DIR)/include $(MPI_INCLUDE)
+LIB_FLAGS   = -L$(HDF5_DIR)/lib -lhdf5 $(MPI_LIB)
 
 DEBUG   =   @DEBUG@
 SHARED_FLAG = @SHARED_FLAG@
@@ -59,8 +66,7 @@ HEADER_SRC	= e-bench.h
 
 C_SRC	= data_reorg.c \
 		e-bench.c \
-		data_expand.c \
-		add_chunkinfo.c
+		data_expand.c
 
 ###################################################################
 # For ALL 

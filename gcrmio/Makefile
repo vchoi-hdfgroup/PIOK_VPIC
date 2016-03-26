@@ -30,8 +30,10 @@
 CC=cc
 
 # Modify HDF5_DIR and H5PART_DIR 
-HDF5_DIR=/global/homes/s/sbyna/software/hdf5
-H5PART_DIR=/global/homes/s/sbyna/software/h5part
+#HDF5_DIR=/global/homes/s/sbyna/software/hdf5
+#H5PART_DIR=/global/homes/s/sbyna/software/h5part
+HDF5_DIR=/global/homes/s/sbyna/software/hdf5-1.8.16-gnu
+H5PART_DIR=/global/homes/s/sbyna/software/H5Part-1.6.6w16-gnu
 
 INCLUDES=-I${HDF5_DIR}/include -I${H5PART_DIR}/include
 CFLAGS=${INCLUDES} -DPARALLEL_IO -DH5_HAVE_PARALLEL -g #-Wall

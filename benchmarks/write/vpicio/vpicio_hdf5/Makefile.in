@@ -33,14 +33,21 @@ BIN_DIR	= @BIN_DIR@
 HDF5_DIR	= @HDF5_PATH@
 H5PART_DIR	= @H5PART_PATH@
 MPI_DIR	= @MPI_PATH@
-INCLUDES = -I. -I$(HDF5_DIR)/include
+ifeq (X$(MPI_DIR), X)
+	MPI_INCLUDE =
+	MPI_LIB =
+else
+	MPI_INCLUDE = -I$(MPI_DIR)/include
+	MPI_LIB = -L$(MPI_DIR)/lib -lmpi
+endif
+INCLUDES = -I. -I$(HDF5_DIR)/include $(MPI_INCLUDE)
 C_FLAGS	= -m64 -DUSE_V4_SSE -DOMPI_SKIP_MPICXX -DPARALLEL_IO
-LIB_FLAGS   = -L$(HDF5_DIR)/lib -lhdf5 -lz -lm -ldl
+LIB_FLAGS   = -L$(HDF5_DIR)/lib $(MPI_LIB) -lhdf5 -lz -lm -ldl
 
 DEBUG   =   @DEBUG@
 SHARED_FLAG = @SHARED_FLAG@
 
-CC	= @CCC_COMPILER@
+CC	= @CC_COMPILER@
 C_EXE	= vpicio_uni_h5
 
 .SUFFIXES: .cpp .c
@@ -62,7 +69,7 @@ C_SRC	= vpicio_uni_h5.c
 all:	${C_EXE}
 
 $(C_EXE): $(C_OBJS)
-	$(CC) $(DEBUG) $(SHARED_FLAG) $(C_FLAGS) $(LIB_FLAGS) -o ${C_EXE} $(C_OBJS) 
+	$(CC) -o ${C_EXE} $(C_OBJS) $(SHARED_FLAG) $(C_FLAGS) $(LIB_FLAGS)
 
 ###################################################################
 # For clean 

@@ -107,7 +107,7 @@ if test "$MPI_PATH" = "" ; then
     fi
 fi
 if test "$MPI_PATH" = "" ; then
-    AC_MSG_ERROR([invalid MPI PATH])
+    AC_MSG_WARN([invalid MPI PATH. will use system default if any])
 fi
 ])
 
@@ -126,6 +126,23 @@ fi
 ])
 
 AC_DEFUN(my_CC_GET_COMPILER, [
+CC_COMPILER=
+tmp=`which cc 2>&1`
+
+AC_MSG_CHECKING([for Cray cc compiler])
+if test -f $tmp ; then
+    CC_COMPILER=$tmp
+    AC_MSG_RESULT([found])
+elif test -n $CC ; then
+    CC_COMPILER=$CC
+    AC_MSG_RESULT([found, but not necessarily Cray cc])
+else
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([valid Cray cc compiler required])
+fi
+])
+
+AC_DEFUN(my_CCC_GET_COMPILER, [
 CCC_COMPILER=
 tmp=`which CC 2>&1`
 
