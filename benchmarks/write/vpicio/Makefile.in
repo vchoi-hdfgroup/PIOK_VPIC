@@ -39,7 +39,8 @@ HOST	= `uname -n`
 
 TOP	=	@TOP@
 SRC	= $(TOP)/benchmarks/write/vpicio
-BUILDSUBDIRS = vpicio_hdf5 vpicio_nonuni vpicio_uni vpicio_uni_md
+#BUILDSUBDIRS = vpicio_hdf5 vpicio_nonuni vpicio_uni vpicio_uni_md
+BUILDSUBDIRS = vpicio_hdf5 vpicio_nonuni vpicio_uni
 DEPENDSUBDIRS = $(BUILDSUBDIRS)
 INSTALLSUBDIRS = $(BUILDSUBDIRS)
 ###################################################################

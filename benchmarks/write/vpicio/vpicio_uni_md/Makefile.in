@@ -28,6 +28,9 @@
 # * Fri Mar 25 09:59:39 PDT 2016
 # *
 
+## Special HDF5 is needed
+## e.g. /global/homes/s/sbyna/software/hdf5_coll_io
+
 SRC = @TOP@/benchmarks/write/vpicio/vpicio_uni_md
 BIN_DIR	= @BIN_DIR@
 HDF5_DIR	= @HDF5_PATH@
