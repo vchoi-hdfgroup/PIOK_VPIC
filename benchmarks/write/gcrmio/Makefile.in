@@ -42,7 +42,7 @@ else
 endif
 INCLUDES = -I. -I$(HDF5_DIR)/include -I$(H5PART_DIR)/include $(MPI_INCLUDE)
 C_FLAGS	= -DPARALLEL_IO -DH5_HAVE_PARALLEL
-LIB_FLAGS   = -L$(HDF5_DIR)/lib -L${H5PART_DIR}/lib $(MPI_LIB) --lH5Part lhdf5 -lz -lm
+LIB_FLAGS   = -L$(HDF5_DIR)/lib -L${H5PART_DIR}/lib $(MPI_LIB) -lH5Part lhdf5 -lz -lm
 
 DEBUG   =   @DEBUG@
 SHARED_FLAG = @SHARED_FLAG@
