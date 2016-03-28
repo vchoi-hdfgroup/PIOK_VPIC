@@ -662,6 +662,8 @@ CCC
 CC
 INSTALLSUBDIRS
 DEPENDSUBDIRS
+BUILD_WRITE_SUBDIRS
+BUILD_READ_SUBDIRS
 BUILDSUBDIRS
 TOP
 GXX_COMPILER
@@ -716,6 +718,12 @@ enable_option_checking
 enable_verbose
 enable_read_benchmark_only
 enable_write_benchmark_only
+enable_ardetection
+enable_ecog
+enable_msi
+enable_gcrmio
+enable_vorpalio
+enable_vpicio
 with_hdf5
 with_h5part
 with_mpi
@@ -1355,7 +1363,13 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-verbose                Print output to the standard output
   --enable-read-benchmark-only	      Enable read benchmark only build
-  --enable-write-benchmark-only        Enable write benchmark only build
+  --enable-write-benchmark-only      Enable write benchmark only build
+  --enable-ardetection               Enable ar_detection build only
+  --enable-ecog                      Enable ecog build only
+  --enable-msi                       Enable msi build only
+  --enable-gcrmio                    Enable gcrmio build only
+  --enable-vorpalio                  Enable vorpalio build only
+  --enable-vpicio                    Enable vpicio build only
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -1843,6 +1857,42 @@ if test "${enable_write_benchmark_only+set}" = set; then
 fi
 
 
+# Check whether --enable-ardetection was given.
+if test "${enable_ardetection+set}" = set; then
+  enableval=$enable_ardetection; ac_ardetection=$enableval
+fi
+
+
+# Check whether --enable-ecog was given.
+if test "${enable_ecog+set}" = set; then
+  enableval=$enable_ecog; ac_ecog=$enableval
+fi
+
+
+# Check whether --enable-msi was given.
+if test "${enable_msi+set}" = set; then
+  enableval=$enable_msi; ac_msi=$enableval
+fi
+
+
+# Check whether --enable-gcrmio was given.
+if test "${enable_gcrmio+set}" = set; then
+  enableval=$enable_gcrmio; ac_gcrmio=$enableval
+fi
+
+
+# Check whether --enable-vorpalio was given.
+if test "${enable_vorpalio+set}" = set; then
+  enableval=$enable_vorpalio; ac_vorpalio=$enableval
+fi
+
+
+# Check whether --enable-vpicio was given.
+if test "${enable_vpicio+set}" = set; then
+  enableval=$enable_vpicio; ac_vpicio=$enableval
+fi
+
+
 Ver_separator ()
 {
 	var1=$1
@@ -1867,6 +1917,8 @@ Ver_getter ()
 
 OUTPUTFILES="./Makefile ./benchmarks/Makefile ./benchmarks/read/Makefile ./benchmarks/write/Makefile ./benchmarks/read/ar_detection/Makefile ./benchmarks/read/ecog/Makefile ./benchmarks/read/msi/Makefile ./benchmarks/write/gcrmio/Makefile ./benchmarks/write/vorpalio/Makefile ./benchmarks/write/vpicio/Makefile ./benchmarks/write/vpicio/vpicio_hdf5/Makefile ./benchmarks/write/vpicio/vpicio_nonuni/Makefile ./benchmarks/write/vpicio/vpicio_uni/Makefile ./benchmarks/write/vpicio/vpicio_uni_md/Makefile"
 BUILDSUBDIRS="benchmarks"
+BUILD_READ_SUBDIRS="ar_detection ecog msi"
+BUILD_WRITE_SUBDIRS="gcrmio vorpalio vpicio"
 DEPENDSUBDIRS="benchmarks"
 INSTALLSUBDIRS="benchmarks"
 HOST=`uname -n`
@@ -2121,6 +2173,36 @@ if test "$ac_write" = "yes" ; then
     echo "*** only build write benchmark ***"
     BUILD_WRITE="1"
 fi
+if test "$ac_ardetection" = "yes" ; then
+    echo "*** only build ar_detection benchmark ***"
+    BUILD_READ_SUBDIRS="ar_detection"
+	BUILD_READ="1"
+fi
+if test "$ac_ecog" = "yes" ; then
+    echo "*** only build ecog benchmark ***"
+    BUILD_READ_SUBDIRS="ecog"
+	BUILD_READ="1"
+fi
+if test "$ac_msi" = "yes" ; then
+    echo "*** only build msi benchmark ***"
+    BUILD_READ_SUBDIRS="msi"
+	BUILD_READ="1"
+fi
+if test "$ac_gcrmio" = "yes" ; then
+    echo "*** only build gcrmio benchmark ***"
+    BUILD_WRITE_SUBDIRS="gcrmio"
+    BUILD_WRITE="1"
+fi
+if test "$ac_vorpalio" = "yes" ; then
+    echo "*** only build vorpalio benchmark ***"
+    BUILD_WRITE_SUBDIRS="vorpalio"
+    BUILD_WRITE="1"
+fi
+if test "$ac_vpicio" = "yes" ; then
+    echo "*** only build vpicio benchmark ***"
+    BUILD_WRITE_SUBDIRS="vpicio"
+    BUILD_WRITE="1"
+fi
 
 DEBUG="-g"
 SHARED_FLAG=
@@ -2133,6 +2215,8 @@ fi
 if test ! -d $BIN_DIR ; then
     mkdir $BIN_DIR
 fi
+
+
 
 
 
