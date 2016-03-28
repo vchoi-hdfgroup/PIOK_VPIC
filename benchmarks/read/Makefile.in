@@ -40,7 +40,6 @@ HOST	= `uname -n`
 TOP	=	@TOP@
 SRC	= $(TOP)/benchmarks/read
 BUILD_READ	= @BUILD_READ@
-BUILD_WRITE	= @BUILD_WRITE@
 BUILDSUBDIRS = ar_detection ecog msi
 #ifeq ($(BUILD_READ),1)
 #	BUILDSUBDIRS	= read
