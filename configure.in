@@ -137,26 +137,32 @@ fi
 if test "$ac_ardetection" = "yes" ; then
     echo "*** only build ar_detection benchmark ***"
     BUILD_READ_SUBDIRS="ar_detection"
+	BUILD_READ="1"
 fi
 if test "$ac_ecog" = "yes" ; then
     echo "*** only build ecog benchmark ***"
     BUILD_READ_SUBDIRS="ecog"
+	BUILD_READ="1"
 fi
 if test "$ac_msi" = "yes" ; then
     echo "*** only build msi benchmark ***"
     BUILD_READ_SUBDIRS="msi"
+	BUILD_READ="1"
 fi
 if test "$ac_gcrmio" = "yes" ; then
     echo "*** only build gcrmio benchmark ***"
     BUILD_WRITE_SUBDIRS="gcrmio"
+    BUILD_WRITE="1"
 fi
 if test "$ac_vorpalio" = "yes" ; then
     echo "*** only build vorpalio benchmark ***"
     BUILD_WRITE_SUBDIRS="vorpalio"
+    BUILD_WRITE="1"
 fi
 if test "$ac_vpicio" = "yes" ; then
     echo "*** only build vpicio benchmark ***"
     BUILD_WRITE_SUBDIRS="vpicio"
+    BUILD_WRITE="1"
 fi
 
 dnl ##########################################################
