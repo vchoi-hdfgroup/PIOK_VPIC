@@ -45,11 +45,9 @@ BUILDSUBDIRS = read write
 READSUBDIRS = read
 WRITESUBDIRS = write
 ifeq ($(BUILD_READ),1)
-	BUILDFLAG   = "BUILD_READ=1"
 	BUILDSUBDIRS	= read
 endif
 ifeq ($(BUILD_WRITE),1)
-    BUILDFLAG   = "BUILD_WRITE=1"
 	BUILDSUBDIRS	= write
 endif
 DEPENDSUBDIRS = $(BUILDSUBDIRS)
@@ -61,7 +59,7 @@ all::	$(BUILDSUBDIRS)
 	for i in $(BUILDSUBDIRS) ; \
 	do \
 	(cd $$i ; echo "making" all "in $(TOP)..." ; \
-	$(MAKE) all $(BUILDFLAG) ) ; \
+	$(MAKE) all ) ; \
 	done
 
 ###################################################################
