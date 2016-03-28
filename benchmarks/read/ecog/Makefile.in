@@ -103,7 +103,7 @@ depend:
 install:
 	$(INSTALL) $(C_EXE_EBENCH) $(BIN_DIR)
 	$(INSTALL) $(C_EXE_DATAREORG) $(BIN_DIR)
-	$(INSTALL) $(C_EXE_DATAEXP) $(BIN_DIR)
+	$(INSTALL) $(C_EXE_DATAREXP) $(BIN_DIR)
 
 ###################################################################
 # for forceful rebuild
