@@ -40,7 +40,8 @@ HOST	= `uname -n`
 TOP	=	@TOP@
 SRC	= $(TOP)/benchmarks/write
 BUILD_WRITE	= @BUILD_WRITE@
-BUILDSUBDIRS = gcrmio vorpalio vpicio
+BUILDSUBDIRS = @BUILD_WRITE_SUBDIRS@
+#BUILDSUBDIRS = gcrmio vorpalio vpicio
 DEPENDSUBDIRS = $(BUILDSUBDIRS)
 INSTALLSUBDIRS = $(BUILDSUBDIRS)
 ###################################################################
