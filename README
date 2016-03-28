@@ -119,3 +119,43 @@ In <piok_dir>/vpicio, we have the code for multiple versions of vpicio kernel.
 	<piok_dir>/vpicio/README file has further details on compiling, and sample
 	commands to run on NERSC's Edison system.
 
+===============
+
+Configure options
+
+  --prefix=<PATH>            Specify the installation path
+                   Default is the current directory (.), and 
+                   the executables will be installed in ./bin/.
+                   E.g. when /tmp/mytest is provided, 
+                        the executables will be in /tmp/mytest/bin/.
+
+  --with-hdf5=<PATH>         Specify the HDF5 path
+  --with-h5part=<PATH>       Specify the H5Part path
+  --with-mpi=<PATH>          Specify the MPI path
+                   When MPI path is not provided, building process will use the
+                   system default (e.g. NERSC case).
+  --enable-read-benchmark-only	     Enable read benchmark only build
+                   Only build the read benchmarks 
+                   (i.e. benchmarks/read directory).
+  --enable-write-benchmark-only      Enable write benchmark only build
+                   Only build the write benchmarks 
+                   (i.e. benchmarks/write directory).
+  --enable-ardetection               Enable ar_detection build only
+                   Only build the ar_detection benchmarks 
+                   (i.e. benchmarks/read/ar_detection directory).
+  --enable-ecog                      Enable ecog build only
+                   Only build the ecog benchmarks 
+                   (i.e. benchmarks/read/ecog directory).
+  --enable-msi                       Enable msi build only
+                   Only build the MSI benchmarks 
+                   (i.e. benchmarks/read/msi directory).
+  --enable-gcrmio                    Enable gcrmio build only
+                   Only build the gcrmio benchmarks 
+                   (i.e. benchmarks/write/gcrmio directory).
+  --enable-vorpalio                  Enable vorpalio build only
+                   Only build the vorpalio benchmarks 
+                   (i.e. benchmarks/write/vorpalio directory).
+  --enable-vpicio                    Enable vpicio build only
+                   Only build the vpicio benchmarks 
+                   (i.e. benchmarks/write/vpicio directory).
+
