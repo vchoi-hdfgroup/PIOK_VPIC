@@ -56,12 +56,8 @@ int x_dim = 64;
 int y_dim = 64; 
 int z_dim = 64;
 
-//int blocksize = 1048576;	// 1024x1024=1048576 makingn 32MB block
-int blocksize = 4096;	// 32x128*8=4096*8=32768
-
 // Uniform random number
-//inline double uniform_random_number() 
-double uniform_random_number() 
+inline double uniform_random_number() 
 {
 	return (((double)rand())/((double)(RAND_MAX)));
 }
@@ -97,7 +93,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	timer_on (2);
 	H5PartWriteDataFloat32(file,"x",x); 
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_float32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_float32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 	if (rank == 0) printf ("Written variable 1 \n");
@@ -106,7 +102,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataFloat32(file,"y",y);
 	if (rank == 0) printf ("Written variable 2 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_float32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_float32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 
@@ -114,7 +110,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataFloat32(file,"z",z);
 	if (rank == 0) printf ("Written variable 3 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_float32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_float32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 
@@ -122,7 +118,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataInt32(file,"id1",id1);
 	if (rank == 0) printf ("Written variable 4 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_int32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_int32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 
@@ -130,7 +126,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataInt32(file,"id2",id2);
 	if (rank == 0) printf ("Written variable 5 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_int32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_int32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 
@@ -138,7 +134,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataFloat32(file,"px",px); 
 	if (rank == 0) printf ("Written variable 6 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_float32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_float32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 
@@ -146,7 +142,7 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataFloat32(file,"py",py);
 	if (rank == 0) printf ("Written variable 7 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_float32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_float32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 
@@ -154,30 +150,14 @@ void create_and_write_synthetic_h5part_data(int rank)
 	H5PartWriteDataFloat32(file,"pz",pz);
 	if (rank == 0) printf ("Written variable 8 \n");
 	timer_off (2);
-	var_data_size = numparticles * sizeof (h5part_float32_t)/blocksize;
+	var_data_size = numparticles * sizeof (h5part_float32_t)/(1024*1024);
 	printf ("Rank: %d, wrote %.2f MB, time: %f sec; rate: %f\n", rank, var_data_size, elapse[2], var_data_size/elapse[2]);
 	timer_reset(2);
 }
 
 int main (int argc, char* argv[]) 
 {
-	char *file_name_org = argv[1];
-	char file_name[1024];
-	int i=0;
-/*
- 	int numaggr;
-	int ierr;
-	MPI_Info FILE_INFO_TEMPLATE;
-	hid_t acc_template;
-	acc_template = H5Pcreate(H5P_FILE_ACCESS);
-        if (getenv("LBNL_LIMIT_AGGR")) {
-		numaggr = atoi(getenv("LBNL_LIMIT_AGGR"));
-		printf("LBNL: MPI-IO LIMIT NUM of AGGR: %d\n", numaggr);
-		ierr = MPI_Info_set(FILE_INFO_TEMPLATE, "bg_nodes_pset", getenv("LBNL_LIMIT_AGGR"));
-	}
-	ierr = H5Pset_fapl_mpio(acc_template, io_comm, FILE_INFO_TEMPLATE);
-  	ierr = H5Pclose(acc_template);
-*/
+	char *file_name = argv[1];
 	
 	MPI_Init(&argc,&argv);
 	int my_rank, num_procs;
@@ -186,13 +166,11 @@ int main (int argc, char* argv[])
 
 	if (argc == 3)
 	{
-		//numparticles = (atoi (argv[2]))*1024*1024;
-		numparticles = (atoi (argv[2]))*blocksize;
+		numparticles = (atoi (argv[2]))*1024*1024;
 	}
 	else
 	{
-		//numparticles = 8*1024*1024;
-		numparticles = 8*blocksize;
+		numparticles = 8*1024*1024;
 	}
 
 	if (my_rank == 0) {printf ("Number of paritcles: %ld \n", numparticles);}
@@ -208,46 +186,40 @@ int main (int argc, char* argv[])
 	id1=(h5part_int32_t*)malloc(numparticles*sizeof(h5part_int32_t));
 	id2=(h5part_int32_t*)malloc(numparticles*sizeof(h5part_int32_t));
 
-	for (i=0; i<10; i++) {
-		sprintf(file_name , "%s-%d.h5", file_name_org, i);
+	init_particles ();
 
-		init_particles ();
-
-		if (my_rank == 0) {
-			printf ("Finished initializing particles \n");
-		}
-
-		MPI_Barrier (MPI_COMM_WORLD);
-		timer_on (0);
-		//file = H5PartOpenFileParallelAlign(file_name, H5PART_WRITE, MPI_COMM_WORLD, alignf);
-		// file = H5PartOpenFileParallel (file_name, H5PART_WRITE | H5PART_VFD_MPIPOSIX | H5PART_FS_LUSTRE, MPI_COMM_WORLD);
-		//
-
-		file = H5PartOpenFileParallel (file_name, H5PART_WRITE | H5PART_FS_LUSTRE, MPI_COMM_WORLD);
-
-		if (my_rank == 0)
-		{
-			printf ("Opened H5Part file... \n");
-		}
-		// Throttle and see performance
-		// H5PartSetThrottle (file, 10);
-
-		H5PartWriteFileAttribString(file, "Origin", "Tested by Suren");
-
-		MPI_Barrier (MPI_COMM_WORLD);
-		timer_on (1);
-
-		if (my_rank == 0) printf ("Before writing particles \n");
-		create_and_write_synthetic_h5part_data(my_rank);
-
-		MPI_Barrier (MPI_COMM_WORLD);
-		timer_off (1);
-		if (my_rank == 0) printf ("After writing particles \n");
-
-		H5PartCloseFile(file);
-		if (my_rank == 0) printf ("After closing particles \n");
+	if (my_rank == 0)
+	{
+		printf ("Finished initializing particles \n");
 	}
 
+	MPI_Barrier (MPI_COMM_WORLD);
+	timer_on (0);
+	//file = H5PartOpenFileParallelAlign(file_name, H5PART_WRITE, MPI_COMM_WORLD, alignf);
+	// file = H5PartOpenFileParallel (file_name, H5PART_WRITE | H5PART_VFD_MPIPOSIX | H5PART_FS_LUSTRE, MPI_COMM_WORLD);
+	file = H5PartOpenFileParallel (file_name, H5PART_WRITE | H5PART_FS_LUSTRE, MPI_COMM_WORLD);
+
+	if (my_rank == 0)
+	{
+		printf ("Opened H5Part file... \n");
+	}
+	// Throttle and see performance
+	// H5PartSetThrottle (file, 10);
+
+	H5PartWriteFileAttribString(file, "Origin", "Tested by Suren");
+
+	MPI_Barrier (MPI_COMM_WORLD);
+	timer_on (1);
+
+	if (my_rank == 0) printf ("Before writing particles \n");
+	create_and_write_synthetic_h5part_data(my_rank);
+
+	MPI_Barrier (MPI_COMM_WORLD);
+	timer_off (1);
+	if (my_rank == 0) printf ("After writing particles \n");
+
+	H5PartCloseFile(file);
+	if (my_rank == 0) printf ("After closing particles \n");
 
 	free(x); free(y); free(z);
 	free(px); free(py); free(pz);
