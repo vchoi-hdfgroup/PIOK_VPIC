@@ -55,7 +55,7 @@ extern float elapse[8];
    storing the result in RESULT.
    Return 1 if the difference is negative, otherwise 0.  */
 
-inline int
+static inline int
 timeval_subtract (struct timeval *result, struct timeval *x, struct timeval *y)
 {
   /* Perform the carry for the later subtraction by updating y. */
