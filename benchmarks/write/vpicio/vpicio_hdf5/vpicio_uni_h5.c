@@ -154,7 +154,7 @@ int main (int argc, char* argv[])
 		numparticles = 8*1024*1024;
 	}
 
-	if (my_rank == 0) {printf ("Number of paritcles: %ld \n", numparticles);}
+	if (my_rank == 0) {printf ("Number of particles: %ld \n", numparticles);}
 
 	x=(float*)malloc(numparticles*sizeof(double));
 	y=(float*)malloc(numparticles*sizeof(double));
