@@ -93,7 +93,7 @@ Ver_getter ()
 	varget=`echo $varget | sed 's/\./ /g'`
 }
  
-OUTPUTFILES="./Makefile ./benchmarks/Makefile ./benchmarks/read/Makefile ./benchmarks/write/Makefile ./benchmarks/read/ar_detection/Makefile ./benchmarks/read/ecog/Makefile ./benchmarks/read/msi/Makefile ./benchmarks/write/gcrmio/Makefile ./benchmarks/write/vorpalio/Makefile ./benchmarks/write/vpicio/Makefile ./benchmarks/write/vpicio/vpicio_hdf5/Makefile ./benchmarks/write/vpicio/vpicio_nonuni/Makefile ./benchmarks/write/vpicio/vpicio_uni/Makefile ./benchmarks/write/vpicio/vpicio_uni_md/Makefile"
+OUTPUTFILES="./Makefile ./benchmarks/Makefile ./benchmarks/read/Makefile ./benchmarks/write/Makefile ./benchmarks/read/ar_detection/Makefile ./benchmarks/read/ecog/Makefile ./benchmarks/read/msi/Makefile ./benchmarks/write/gcrmio/Makefile ./benchmarks/write/vorpalio/Makefile ./benchmarks/write/vpicio/Makefile ./benchmarks/write/vpicio/vpicio_hdf5/Makefile ./benchmarks/write/vpicio/vpicio_nonuni/Makefile ./benchmarks/write/vpicio/vpicio_uni/Makefile ./benchmarks/write/vpicio/vpicio_uni_md/Makefile ./benchmarks/write/vpicio/vpicio_uni_cm/Makefile"
 BUILDSUBDIRS="benchmarks"
 BUILD_READ_SUBDIRS="ar_detection ecog msi"
 BUILD_WRITE_SUBDIRS="gcrmio vorpalio vpicio"

@@ -27,82 +27,70 @@
 # *
 # * Fri Mar 25 09:59:39 PDT 2016
 # *
+
+SRC = @TOP@/benchmarks/write/vpicio/vpicio_hdf5
+BIN_DIR	= @BIN_DIR@
+HDF5_DIR	= @HDF5_PATH@
+H5PART_DIR	= @H5PART_PATH@
+MPI_DIR	= @MPI_PATH@
+ifeq (X$(MPI_DIR), X)
+	MPI_INCLUDE =
+	MPI_LIB =
+else
+	MPI_INCLUDE = -I$(MPI_DIR)/include
+	MPI_LIB = -L$(MPI_DIR)/lib -lmpi
+endif
+INCLUDES = -I. -I$(HDF5_DIR)/include $(MPI_INCLUDE)
+C_FLAGS	= -m64 -DUSE_V4_SSE -DOMPI_SKIP_MPICXX -DPARALLEL_IO
+LIB_FLAGS   = -L$(HDF5_DIR)/lib $(MPI_LIB) -lhdf5 -lz -lm -ldl
+
+DEBUG   =   @DEBUG@
+SHARED_FLAG = @SHARED_FLAG@
+
+CC	= @CCC_COMPILER@
+C_EXE	= vpicio_uni_cm
+
+.SUFFIXES: .cpp .c
+C_OBJS = $(C_SRC:.c=.o)
+.c.o:
+	cd ${<D}; $(CC) $(DEBUG) $(C_FLAGS) $(INCLUDES) -c ${<F}
+
+INSTALL	= @INSTALL@
 ###################################################################
-# Change the following directory definition as appropriate
+# Source files
 ###################################################################
-SHELL	= /bin/sh
-HOST	= `uname -n`
+HEADER_SRC	= timer.h
+
+C_SRC	= vpicio_uni_cm.c
 
 ###################################################################
-# C++ compilation definition
+# For ALL 
 ###################################################################
+all:	${C_EXE}
 
-TOP	=	@TOP@
-SRC	= $(TOP)/benchmarks/write/vpicio
-#BUILDSUBDIRS = vpicio_hdf5 vpicio_nonuni vpicio_uni vpicio_uni_md
-BUILDSUBDIRS = vpicio_hdf5 vpicio_nonuni vpicio_uni vpicio_uni_cm
-DEPENDSUBDIRS = $(BUILDSUBDIRS)
-INSTALLSUBDIRS = $(BUILDSUBDIRS)
-###################################################################
-# For ALL build for C
-###################################################################
-all::	$(BUILDSUBDIRS)
-	for i in $(BUILDSUBDIRS) ; \
-	do \
-	(cd $$i ; echo "making" all "in $(TOP)..." ; \
-	$(MAKE) all ) ; \
-	done
+$(C_EXE): $(C_OBJS)
+	$(CC) -o ${C_EXE} $(C_OBJS) $(SHARED_FLAG) $(C_FLAGS) $(LIB_FLAGS)
 
 ###################################################################
-# clean : removes intermediate files
-# cleanall : removes intermediate files and executables
+# For clean 
 ###################################################################
-clean:: $(BUILDSUBDIRS)
-	for i in $(BUILDSUBDIRS) ; \
-	do \
-	(cd $$i ; echo "making" clean "in $(TOP)/$$i..." ; \
-	$(MAKE) clean ) ; \
-	done
+clean: 
+	\rm -f $(C_OBJS) core 
 
-cleanall:: $(BUILDSUBDIRS)
-	for i in $(BUILDSUBDIRS) ; \
-	do \
-	(cd $$i ; echo "making" cleanall "in $(TOP)/$$i..." ; \
-	$(MAKE) cleanall ) ; \
-	done
+cleanall: 
+	\rm -f $(C_OBJS) core ${C_EXE}
+
+###################################################################
+# for depend
+###################################################################
+depend:
+#	@ $(C++) $(INCLUDES) -M $(C_SRC) >> Makefile
 
 ###################################################################
 # For install
 ###################################################################
-install::	$(INSTALLSUBDIRS)
-	for i in $(INSTALLSUBDIRS) ; \
-	do \
-	(cd $$i ; echo "making" install "in $(TOP)/$$i..." ; \
-	${MAKE} install) ; \
-	done
-
-######################
-depend:	$(DEPENDSUBDIRS)
-	for i in $(DEPENDSUBDIRS) ; \
-	do \
-	(cd $$i ; echo building Makefile "in $$i..." ; \
-	$(MAKE) depend $(BUILDFLAG) ) ; \
-	done
-
-###################################################################
-# to make a Makefile, make -f thisfile Makefile FRC=rebuild
-# for dependency generation, make sure -xM is for CC only
-#                       and use -MM or -M for g++
-###################################################################
-Makefile	: $(FRC)
-	@ \rm -f $@
-	@ \cp Makefile.in $@
-	@ chmod 440 $@
-	@ for i in $(BUILDSUBDIRS) ; \
-	do \
-	(cd $$i ; echo  building Makefile "in $$i..." ; \
-	$(MAKE) -f Makefile.in Makefile FRC=rebuild) ; \
-	done
+install:
+	$(INSTALL) $(C_EXE) $(BIN_DIR)
 
 ###################################################################
 # for forceful rebuild
